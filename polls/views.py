@@ -151,10 +151,13 @@ def _reply_event_msg(xml, fromUserName, toUserName, postTime):
         longitude = xml.find("Longitude").text
         precision = xml.find("Precision").text
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
-            "你的坐标(%s,%s)@%s" % (latitude, Latitude, precision)))
+            "你的坐标(%s,%s)@%s" % (latitude, latitude, precision)))
     elif event == 'subscribe':
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
             "欢迎订阅"))
+    elif event == 'ENTER':
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "欢迎回来"))
     elif event == 'CLICK':
         eventKey = xml.find("EventKey").text
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
