@@ -1,0 +1,26 @@
+---
+name: peggy
+version: 1
+
+libraries:
+- name: "django"
+  version: "1.4"
+
+# - name: "pytz"
+#  version:
+
+handlers:
+- url: /favicon.ico
+  static_path: favicon.ico
+
+- url: /static/js/post_scripts.js
+  gzip: on
+
+- url: /static/css/style.css
+  gzip: on
+
+- url: /static/css/mobile-angular-ui-base.min.css
+  gzip: on
+
+...
+

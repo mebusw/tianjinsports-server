@@ -1,0 +1,73 @@
+{% extends 'peggy/_base_bo.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="row">
+
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#">全部</a></li>
+            <li role="presentation"><a href="#">待付款</a></li>
+            <li role="presentation"><a href="#">待发货</a></li>
+            <li role="presentation"><a href="#">待收货</a></li>
+            <li role="presentation"><a href="#">待评价</a></li>
+        </ul>
+
+        <ul class="list-group">
+            {% for order in orders %}
+                <li class="list-group-item">
+                    <a href="{% url 'peggy.views.bo_order' order.id %}" class="">
+                        <p>
+                            <span class="pull-left">订单号</span>
+                            <span class="badge pull-left">{{ order.id }}</span>
+                            用户 {{ order.user.username }} | {{ order.user.first_name }}
+                            <span class="pull-right">{{ order.get_state_display }}</span>
+                        </p>
+
+                        <p>
+                            共{{ order.orderitem_set.all|length }}件商品
+                            折扣价<b>￥{{ order.discount_price }}</b> 总价<b>￥{{ order.total_price }}</b><i
+                                class="pull-right"></i>
+                            <a href="{% url 'peggy.views.express' order.id %}"
+                               class="btn btn-primary pull-right">查快递单号 {{ order.express_no|default_if_none:'' }}</a>
+
+                        </p>
+
+                        <p>
+                        </p>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            {% if orders.has_previous %}
+            <li>
+                <a href="?page={{ orders.previous_page_number }}&size={{ size }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for idx in page_range %}
+            <li class="{% if idx == orders.number %}active{% endif %}">
+                <a href="?page={{ idx }}&size={{ size }}">{{ idx }}</a>
+            </li>
+            {% endfor %}
+
+            {% if orders.has_next %}
+            <li>
+                <a href="?page={{ orders.next_page_number }}&size={{ size }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endblock %}

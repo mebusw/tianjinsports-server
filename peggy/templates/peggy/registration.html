@@ -1,0 +1,102 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <form role="form" action="{% url 'peggy.views.do_registration' %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>验证手机，一分钟注册</legend>
+                <div class="form-group row">
+                    <div class="col-xs-8">
+                        <input type="text" name="mobile" id="mobile" class="form-control" placeholder="手机号" focus required>
+                    </div>
+                    <div class="col-xs-4">
+                        <a id="request_captcha" class="btn btn-primary">获取验证码</a>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="text" name="captcha" id="captcha" class="form-control" placeholder="验证码" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="text" name="first_name" class="form-control" placeholder="昵称" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="password" name="password" class="form-control" placeholder="密码" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-xs-12">
+                        <input type="text" name="referrer_mobile" class="form-control" placeholder="推荐人手机号" required>
+                    </div>
+                </div>
+                {% if msg %}
+                    <div class="form-group row">
+                        <div class="alert alert-danger" role="alert">{{ msg }}</div>
+                    </div>
+                {% endif %}
+
+            </fieldset>
+            <hr>
+
+            <button class="btn btn-primary btn-block">
+                注册
+            </button>
+        </form>
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <p>
+                    <small>点击“注册”，即表示您同意《Peggy's免责声明》</small>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function () {
+
+        })();
+
+        $("#request_captcha").click(function (e) {
+            console.log(e.target);
+
+            $.ajax({
+                type: "get",
+                url: "./do_send_captcha",
+                data: {mobile: $("#mobile").val()},
+                success: function (resp) {
+                    console.log(resp);
+                    $("#request_captcha").attr("disabled", "disabled")
+                    var timeLeft = 30;
+                    var timer = setInterval(function () {
+                        $("#request_captcha").text("重新发送(" + timeLeft + ")");
+                        if (timeLeft-- <= 0) {
+                            clearInterval(timer);
+                            $("#request_captcha").removeAttr("disabled")
+                            $("#request_captcha").text("获取验证码");
+                        }
+                    }, 1000);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                timeout: 2000
+            });
+        });
+    </script>
+
+
+{% endblock %}

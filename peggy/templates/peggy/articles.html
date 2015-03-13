@@ -1,0 +1,35 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% for article in articles %}
+            <div class="row">
+                <div class="panel panel-default">
+                    <a href="{% url 'peggy.views.article' article.id %}" class="">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ article.title }}</h3>
+                            <small>{{ article.create_time|date }}</small>
+                        </div>
+                        <div class="panel-body">
+                            <p><img class="img-responsive" src="{{ article.cover_img_url }}"/></p>
+
+                            <p>{{ article.text|truncatechars:80 }}</p>
+                        </div>
+                        <div class="panel-footer">
+                            阅读全文<span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"
+                                      align="right"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %}

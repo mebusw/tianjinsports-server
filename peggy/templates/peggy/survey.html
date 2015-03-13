@@ -1,0 +1,739 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="row">
+        <div class="">
+            <p>
+                PEGGY’S的初衷，是向每个差异化的个体肤质，提供最为贴切适合的呵护。塑造健康充满活力的肌肤是一项系统工程，所以，我们并不推出单纯片面的功效产品，我们更崇尚的是肌肤的全面护理和修复。
+            </p>
+
+            <p>天然，绿色，有机是我们护肤取材最基本的要求，纯净，无添加，无负担是我们一贯的追求。
+                发现、应用自然界动植物营养护肤精华，给予肌肤三个“无”的概念：无刺激，无添加，无沉积负担；重塑肌肤三个“有”的概念：有专属，有营养，有改善。
+            </p>
+
+            <p>下面就开始肌肤重塑之旅的第一步吧！请认真填写，您填写得越详细，我们就越能帮助您见证美丽焕肤奇迹哦！
+            </p>
+        </div>
+    </div>
+
+    <form role="form" action="{% url 'peggy.views.do_survey' %}" method="post" class="">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label class="control-label">您的生日</label>
+        <input id="birthday" name="birthday" placeholder="" type="date" class="form-control" value="1982-05-31">
+    </div>
+
+    <div class="form-group">
+        <label>您的性别</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" id="optionsRadios1" value="M">
+                男
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" id="optionsRadios2" value="F" checked>
+                女
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>1. 您是否满意自己皮肤的现状？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer1" id="optionsRadios1" value="A" checked>
+                满意
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer1" id="optionsRadios2" value="B">
+                基本满意
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer1" id="optionsRadios2" value="C">
+                不满意
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer1" id="optionsRadios3" value="D">
+                非常不满意
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>2. 您一天上网多长时间？（包括手机上网）</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer2" id="optionsRadios1" value="A" checked>
+                12小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer2" id="optionsRadios2" value="B">
+                10小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer2" id="optionsRadios2" value="C">
+                8小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer2" id="optionsRadios3" value="D">
+                8小时以下
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>3. 您一天睡眠时间多长？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer3" id="optionsRadios1" value="A" checked>
+                12小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer3" id="optionsRadios2" value="B">
+                10小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer3" id="optionsRadios2" value="C">
+                8小时
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer3" id="optionsRadios3" value="D">
+                8小时以下
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>4. 您平时有参与一些运动吗？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer4" id="optionsRadios1" value="A" checked>
+                经常
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer4" id="optionsRadios2" value="B">
+                偶尔
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer4" id="optionsRadios2" value="C">
+                不会
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer4" id="optionsRadios3" value="D">
+                不一定
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>5. 您多久吃一次水果？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer5" id="optionsRadios1" value="A" checked>
+                每天
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer5" id="optionsRadios2" value="B">
+                偶尔
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer5" id="optionsRadios2" value="C">
+                不吃
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer5" id="optionsRadios3" value="D">
+                不清楚
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>6. 您每天吃的食物是怎么样的？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer6" id="optionsRadios1" value="A" checked>
+                肉多菜少
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer6" id="optionsRadios2" value="B">
+                菜多肉少
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer" id="optionsRadios2" value="C">
+                菜肉均匀
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer6" id="optionsRadios3" value="D">
+                全是素菜
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer6" id="optionsRadios3" value="E">
+                全是肉菜
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>7. 您具有以下哪些饮食习惯？ （可多选）</label>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="answer7" value="A" checked>
+                常喝牛奶或吃水果
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="answer7" value="B">
+                几乎顿顿有青菜
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="answer7" value="C">
+                经常吃鱼
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="answer7" value="D">
+                五谷杂食
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="answer7" id="answer7ex_chk" value="E">
+                其他
+            </label>
+            <input type="input" name="answer7ex" id="answer7ex" class="form-control" placeholder="请填写">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>8. 您是否会因为心情而影响饮食？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer8" id="optionsRadios1" value="A" checked>
+                经常
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer8" id="optionsRadios2" value="B">
+                偶尔
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer8" id="optionsRadios2" value="C">
+                不会
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer8" id="optionsRadios3" value="D">
+                看好坏程度
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>9. 您每天正常摄入水分的量是多少？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer9" id="optionsRadios1" value="A" checked>
+                大于2500ml
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer9" id="optionsRadios2" value="B">
+                1800ml
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer9" id="optionsRadios2" value="C">
+                1500ml
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer9" id="optionsRadios3" value="D">
+                更少
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>10. 您的皮肤类型是？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios1" value="A" checked>
+                油性肌肤
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios2" value="B">
+                中性肌肤
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios2" value="C">
+                干性肌肤
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios3" value="D">
+                混合偏油
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios1" value="E">
+                混合偏干
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios2" value="F">
+                敏感肌肤
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios2" value="G">
+                痘痘肌肤
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer10" id="optionsRadios3" value="H">
+                不知道
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>11. 您平时有用各类护肤品吗？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer11" id="optionsRadios1" value="A" checked>
+                经常
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer11" id="optionsRadios2" value="B">
+                偶尔
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer11" id="optionsRadios2" value="C">
+                一般不用
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer11" id="optionsRadios3" value="D">
+                其他
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>12. 您有化妆的习惯吗？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer12" id="optionsRadios1" value="A" checked>
+                经常
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer12" id="optionsRadios2" value="B">
+                偶尔
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer12" id="optionsRadios2" value="C">
+                从不
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer12" id="optionsRadios3" value="D">
+                视场合而定
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>13. 您平均一个月花在护肤品上的开销是多少？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer13" id="optionsRadios1" value="A" checked>
+                100元以下
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer13" id="optionsRadios2" value="B">
+                100～200元
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer13" id="optionsRadios2" value="C">
+                200～500元
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer13" id="optionsRadios3" value="D">
+                500以上
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>14. 您挑选护肤品的首要因素是？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer14" id="" value="A" checked>
+                品牌
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer14" id="" value="B">
+                式样
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer14" id="" value="C">
+                价格
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer14" id="" value="D">
+                效果
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer14" id="answer14ex_chk" value="E">
+                其他
+            </label>
+            <input type="input" name="answer14ex" id="answer14ex" class="form-control" placeholder="请填写">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>15. 您最常用的护肤品牌是？</label>
+        <input type="input" name="answer15" class="form-control" placeholder="请填写">
+    </div>
+
+    <div class="form-group">
+        <label>16. 您最重视自己哪个部位？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer16" id="optionsRadios1" value="A" checked>
+                脸
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer16" id="optionsRadios2" value="B">
+                手
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer16" id="optionsRadios2" value="C">
+                脚
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer16" id="optionsRadios3" value="D">
+                全部
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer16" id="answer16ex_chk" value="E">
+                其他
+            </label>
+            <input type="input" name="answer16ex" id="answer16ex" class="form-control" placeholder="请填写">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>17. 您一天洗脸几次？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer17" id="optionsRadios1" value="A" checked>
+                三次
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer17" id="optionsRadios2" value="B">
+                两次
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer17" id="optionsRadios2" value="C">
+                一次
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer17" id="answer17ex_chk" value="D">
+                其他
+            </label>
+            <input type="input" name="answer17ex" id="answer17ex" class="form-control" placeholder="请填写">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>18. 您觉得自己对护肤知识和化妆品了解多少？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer18" id="optionsRadios1" value="A" checked>
+                很多
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer18" id="optionsRadios2" value="B">
+                一般
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer18" id="optionsRadios2" value="C">
+                很少
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer18" id="optionsRadios3" value="D">
+                不了解
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>19. 您喜欢那种类型的护肤品？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer19" id="optionsRadios1" value="A" checked>
+                清爽型（快速吸收）
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer19" id="optionsRadios2" value="B">
+                清爽型（持久保湿）
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer19" id="optionsRadios2" value="C">
+                油质滋润型
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>20. 您喜欢那种香型的护肤品？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer20" id="optionsRadios1" value="A" checked>
+                花香型
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer20" id="optionsRadios2" value="B">
+                草本香型
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer20" id="optionsRadios2" value="C">
+                复合香型
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>21. 您喜欢浓香还是淡香？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer21" id="optionsRadios1" value="A" checked>
+                浓香
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer21" id="optionsRadios2" value="B">
+                适中
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer21" id="optionsRadios2" value="C">
+                淡香
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>22. 是否使用其他护肤品时出现过过敏情况，具体哪些品牌？</label>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer22" id="optionsRadios1" value="A" checked>
+                否
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="answer22" id="answer22ex_chk" value="B">
+                是
+            </label>
+            <input type="input" name="answer22ex" id="answer22ex" class="form-control" placeholder="请填写">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>23. 您对肌肤的其他具体问题描述</label>
+        <input type="input" name="answer23" class="form-control" placeholder="请填写">
+    </div>
+
+    <button class="btn btn-primary btn-block">请为我配药吧！</button>
+    </form>
+    </div>
+
+
+    <script>
+        (function () {
+            $("#answer7ex").hide();
+            $("#answer14ex").hide();
+            $("#answer16ex").hide();
+            $("#answer17ex").hide();
+            $("#answer22ex").hide();
+        })();
+
+        $("#answer7ex_chk").change(function () {
+            if ($("#answer7ex_chk").is(':checked')) {
+                $("#answer7ex").show()
+            } else {
+                $("#answer7ex").hide()
+            }
+        });
+        $("input[name=answer14]").change(function () {
+            if ($("input[name=answer14]").get(4).checked) {
+                $("#answer14ex").show()
+            } else {
+                $("#answer14ex").hide()
+            }
+        });
+        $("input[name=answer16]").change(function () {
+            if ($("input[name=answer16]").get(4).checked) {
+                $("#answer16ex").show()
+            } else {
+                $("#answer16ex").hide()
+            }
+        });
+        $("input[name=answer17]").change(function () {
+            if ($("input[name=answer17]").get(3).checked) {
+                $("#answer17ex").show()
+            } else {
+                $("#answer17ex").hide()
+            }
+        });
+        $("input[name=answer22]").change(function () {
+            if ($("input[name=answer22]").get(1).checked) {
+                $("#answer22ex").show()
+            } else {
+                $("#answer22ex").hide()
+            }
+        });
+    </script>
+
+{% endblock %}

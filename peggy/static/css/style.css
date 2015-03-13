@@ -1,0 +1,79 @@
+
+@media all and (transform-3d), (-webkit-transform-3d) {
+  .carousel-inner > .item {
+    -webkit-transition: -webkit-transform .6s ease-in-out;
+         -o-transition:      -o-transform .6s ease-in-out;
+            transition:         transform .6s ease-in-out;
+
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-perspective: 1000;
+            perspective: 1000;
+  }
+  .carousel-inner > .item.next,
+  .carousel-inner > .item.active.right {
+    left: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+  }
+  .carousel-inner > .item.prev,
+  .carousel-inner > .item.active.left {
+    left: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+  }
+  .carousel-inner > .item.next.left,
+  .carousel-inner > .item.prev.right,
+  .carousel-inner > .item.active {
+    left: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+}
+
+.navbar-absolute-top {
+    background: rgba(200, 179, 219, 0.74);
+}
+
+.has-navbar-top .app-body {
+    padding-top: 1px;
+}
+
+.has-navbar-bottom .app-body {
+    padding-bottom: 51px;
+}
+
+.navbar-absolute-top .btn,
+.navbar-absolute-bottom .btn {
+    color: #333333;
+}
+
+.navbar-brand {
+    padding: 2px 2px;
+}
+
+.scrollable-content .navbar-placeholder-top {
+    height: 41px;
+}
+
+.section {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.btn-magnet-left {
+    margin-top: 5px;
+    margin-right: 3px;
+    padding: 0px;
+    border: 0px;
+}
+
+.btn-magnet-right {
+    margin-top: 5px;
+    margin-left: 3px;
+    padding: 0px;
+    border: 0px;
+}
+
+.btn-navbar.active {
+    color: #337ab7;
+}

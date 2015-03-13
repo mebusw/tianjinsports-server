@@ -1,0 +1,323 @@
+[
+{
+  "fields": {
+    "username": "jacky",
+    "first_name": "jacky",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2015-02-25T21:50:04.930",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$10000$rOX0uNisqYH1$ORAVEpyTGUhpG9ykq6ObGpPzXL+roOB06cARAJ9YEQk=",
+    "email": "a@b.cn",
+    "date_joined": "2015-02-05T17:00:24.853"
+  },
+  "model": "auth.user",
+  "pk": 1
+},
+{
+  "fields": {
+    "username": "13920607947",
+    "first_name": "yhr",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T21:36:52.217",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$10000$AJXIlXsbljUl$SG6Oq9T2E8jwIxM1mQ+cv02n1eMo/iWP0hgJz2mUY7E=",
+    "email": "",
+    "date_joined": "2015-02-05T17:08:28.097"
+  },
+  "model": "auth.user",
+  "pk": 2
+},
+{
+  "fields": {
+    "username": "18622398401",
+    "first_name": "sj",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T18:21:13.415",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$10000$0ff9ZPrrbi7o$BoNM4tQQVtsEuMGEmuDhuv0Ne4V4kZWMgJY2CO/k1CU=",
+    "email": "",
+    "date_joined": "2015-02-25T18:21:13.218"
+  },
+  "model": "auth.user",
+  "pk": 3
+},
+{
+  "fields": {
+    "username": "xuhao",
+    "first_name": "xuhao",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": true,
+    "last_login": "2015-02-25T21:50:04.930",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$10000$Zkh4JXxqYdvn$FnmVGAZxRzOWhWY5ZghuNazvfFWn7MU1XdPlt8sqq7g=",
+    "email": "a@b.cn",
+    "date_joined": "2015-02-05T17:00:24.853"
+  },
+  "model": "auth.user",
+  "pk": 4
+},
+{
+  "fields": {
+    "alipay": "",
+    "city": "",
+    "create_date": "2015-02-05T17:08:28.182",
+    "referrer_mobile": "18622398401",
+    "avatar_url": "http://tp4.sinaimg.cn/2641387791/180/5689334254/0",
+    "weixin": "",
+    "gender": "M",
+    "point": 0,
+    "birthday": "1982-05-28T00:00:00",
+    "user": 1,
+    "address": "\u6cb3\u897f\u533a",
+    "last_checkin_time": "2015-02-05T17:08:28.182",
+    "update_date": null
+  },
+  "model": "peggy.customer",
+  "pk": 1
+},
+{
+  "fields": {
+    "alipay": null,
+    "city": null,
+    "create_date": "2015-02-05T17:08:28.182",
+    "referrer_mobile": "18622398401",
+    "avatar_url": "http://tp4.sinaimg.cn/2641387791/180/5689334254/0",
+    "weixin": null,
+    "gender": "F",
+    "point": 0,
+    "birthday": "1982-05-31T00:00:00",
+    "user": 2,
+    "address": "",
+    "last_checkin_time": "2015-02-05T17:08:28.182",
+    "update_date": null
+  },
+  "model": "peggy.customer",
+  "pk": 2
+},
+{
+  "fields": {
+    "alipay": "",
+    "city": "",
+    "create_date": "2015-02-25T18:21:13.316",
+    "referrer_mobile": "18622398401",
+    "avatar_url": "h,ttp://tp4.sinaimg.cn/2641387791/180/5689334254/0",
+    "weixin": "",
+    "gender": null,
+    "point": 0,
+    "birthday": null,
+    "user": 3,
+    "address": "",
+    "last_checkin_time": "2015-02-25T18:21:13.316",
+    "update_date": null
+  },
+  "model": "peggy.customer",
+  "pk": 3
+},
+{
+  "fields": {
+    "alipay": "",
+    "city": "",
+    "create_date": "2015-02-05T17:08:28.182",
+    "referrer_mobile": "18622398401",
+    "avatar_url": "http://tp4.sinaimg.cn/2641387791/180/5689334254/0",
+    "weixin": "",
+    "gender": "F",
+    "point": 0,
+    "birthday": "1982-05-31T00:00:00",
+    "user": 4,
+    "address": "",
+    "last_checkin_time": "2015-02-05T17:08:28.182",
+    "update_date": null
+  },
+  "model": "peggy.customer",
+  "pk": 4
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u6d01\u9762\u6ce1\u6cab",
+    "description": "\u6d01\u9762\u6ce1\u6cab"
+  },
+  "model": "peggy.product",
+  "pk": 1
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u8c03\u80a4\u6c34",
+    "description": "\u8c03\u80a4\u6c34"
+  },
+  "model": "peggy.product",
+  "pk": 2
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u4e73\u6db2",
+    "description": "\u4e73\u6db2"
+  },
+  "model": "peggy.product",
+  "pk": 3
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u65e5\u971c",
+    "description": "\u65e5\u971c"
+  },
+  "model": "peggy.product",
+  "pk": 4
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u665a\u971c",
+    "description": "\u665a\u971c"
+  },
+  "model": "peggy.product",
+  "pk": 5
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u7cbe\u534e\u6db2",
+    "description": "\u7cbe\u534e\u6db2"
+  },
+  "model": "peggy.product",
+  "pk": 6
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u773c\u971c",
+    "description": "\u773c\u971c"
+  },
+  "model": "peggy.product",
+  "pk": 7
+},
+{
+  "fields": {
+    "price": "0.01",
+    "name": "\u556b\u54e9\u9762\u819c",
+    "description": "\u556b\u54e9\u9762\u819c"
+  },
+  "model": "peggy.product",
+  "pk": 8
+},
+{
+  "fields": {
+    "text": "\u4e00\u76f4\u662f\u201c\u6d77\u6dd8\u65cf\u201d\u7684\u4e3b\u8981\u8d2d\u7269\u5730\uff0c\u5305\u62ec\u9762\u819c\u5728\u5185\u7684\u7f8e\u5bb9\u4ea7\u54c1\u5907\u53d7\u4e2d\u56fd\u6d88\u8d39\u8005\u9752\u7750\u3002\u97e9\u56fd\u4e3d\u5f97\u59ff\u9762\u819c\u5728\u4e2d\u56fd\u5c31\u5341\u5206\u8d70\u4fcf\uff0c\u7136\u800c\u636e\u97e9\u5a924\u65e5\u62a5\u9053\uff0c\u97e9\u56fd\u4e13\u5229\u5385\u8fd1\u65e5\u67e5\u6284\u4e86\u4e00\u5904\u5236\u5047\u7a9d\u70b9\uff0c\u8be5\u7a9d\u70b9\u5236\u9020\u768410\u4e07\u4f59\u5f20\u9762\u819c\u5df2\u9500\u5f80\u4e2d\u56fd\u3002\u66dd\u5149\u753b\u9762\u663e\u793a\uff0c\u5728\u8fd9\u5bb6\u97e9\u56fd\u5bb6\u5ead\u5f0f\u4f5c\u574a\u91cc\uff0c\u5de5\u4eba\u4eec\u56f4\u5750\u5728\u4e00\u8d77\u5305\u88c5\u5df2\u7ecf\u5236\u4f5c\u597d\u7684\u9762\u819c\uff0c\u6ca1\u6709\u4eba\u4f69\u6234\u536b\u751f\u624b\u5957\u3002<img src=\"http://ww1.sinaimg.cn/bmiddle/e82ed815jw1eppdf8s0m3j20eu0bc0tn.jpg\" />\u636e\u97e9\u56fd\u6709\u5173\u90e8\u95e8\u900f\u9732\uff0c\u6d89\u6848\u7a9d\u70b9\u5df2\u7ecf\u5236\u9020\u4e8626.6\u4e07\u5f20\u4e3d\u5f97\u59ff\u9488\u5242\u8865\u6c34\u9762\u819c(Leaders Insolution)\uff0c\u5e02\u573a\u4ef7\u7ea6\u5408\u4eba\u6c11\u5e01450\u4e07\u5143\u3002\u8fd9\u6b21\u73b0\u573a\u67e5\u83b7\u7684\u5047\u5192\u9762\u819c\u6570\u91cf\u8fbe15.8\u4e07\u4e2a\uff0c\u53e6\u670910.8\u4e07\u4e2a\u5df2\u901a\u8fc7\u201c\u6d77\u6dd8\u201d\u3001\u4ee3\u8d2d\u7b49\u975e\u6b63\u5e38\u51fa\u53e3\u65b9\u5f0f\u6d41\u5165\u4e2d\u56fd\u5e02\u573a\u3002\r\n",
+    "cover_img_url": "http://img1.cache.netease.com/catchpic/B/B3/B381E1C7BFB0C5B6536663EAA711E9B3.jpg",
+    "create_time": "2015-02-09T17:50:00",
+    "type": "BULLETIN",
+    "title": "\u97e9\u56fd20\u4e07\u5f20\u5047\u9762\u819c\u9500\u4e2d\u56fd\u53ef\u80fd\u6bc1\u5bb9!"
+  },
+  "model": "peggy.article",
+  "pk": 1
+},
+{
+  "fields": {
+    "text": "\u4e00\u76f4\u662f\u201c\u6d77\u6dd8\u65cf\u201d\u7684\u4e3b\u8981\u8d2d\u7269\u5730\uff0c\u5305\u62ec\u9762\u819c\u5728\u5185\u7684\u7f8e\u5bb9\u4ea7\u54c1\u5907\u53d7\u4e2d\u56fd\u6d88\u8d39\u8005\u9752\u7750\u3002\u97e9\u56fd\u4e3d\u5f97\u59ff\u9762\u819c\u5728\u4e2d\u56fd\u5c31\u5341\u5206\u8d70\u4fcf\uff0c\u7136\u800c\u636e\u97e9\u5a924\u65e5\u62a5\u9053\uff0c\u97e9\u56fd\u4e13\u5229\u5385\u8fd1\u65e5\u67e5\u6284\u4e86\u4e00\u5904\u5236\u5047\u7a9d\u70b9\uff0c\u8be5\u7a9d\u70b9\u5236\u9020\u768410\u4e07\u4f59\u5f20\u9762\u819c\u5df2\u9500\u5f80\u4e2d\u56fd\u3002\u66dd\u5149\u753b\u9762\u663e\u793a\uff0c\u5728\u8fd9\u5bb6\u97e9\u56fd\u5bb6\u5ead\u5f0f\u4f5c\u574a\u91cc\uff0c\u5de5\u4eba\u4eec\u56f4\u5750\u5728\u4e00\u8d77\u5305\u88c5\u5df2\u7ecf\u5236\u4f5c\u597d\u7684\u9762\u819c\uff0c\u6ca1\u6709\u4eba\u4f69\u6234\u536b\u751f\u624b\u5957\u3002<img src=\"http://ww1.sinaimg.cn/bmiddle/e82ed815jw1eppdf8s0m3j20eu0bc0tn.jpg\" />\u636e\u97e9\u56fd\u6709\u5173\u90e8\u95e8\u900f\u9732\uff0c\u6d89\u6848\u7a9d\u70b9\u5df2\u7ecf\u5236\u9020\u4e8626.6\u4e07\u5f20\u4e3d\u5f97\u59ff\u9488\u5242\u8865\u6c34\u9762\u819c(Leaders Insolution)\uff0c\u5e02\u573a\u4ef7\u7ea6\u5408\u4eba\u6c11\u5e01450\u4e07\u5143\u3002\u8fd9\u6b21\u73b0\u573a\u67e5\u83b7\u7684\u5047\u5192\u9762\u819c\u6570\u91cf\u8fbe15.8\u4e07\u4e2a\uff0c\u53e6\u670910.8\u4e07\u4e2a\u5df2\u901a\u8fc7\u201c\u6d77\u6dd8\u201d\u3001\u4ee3\u8d2d\u7b49\u975e\u6b63\u5e38\u51fa\u53e3\u65b9\u5f0f\u6d41\u5165\u4e2d\u56fd\u5e02\u573a\u3002\r\n",
+    "cover_img_url": "http://img1.cache.netease.com/catchpic/B/B3/B381E1C7BFB0C5B6536663EAA711E9B3.jpg",
+    "create_time": "2015-01-15T17:50:00",
+    "type": "ARTICLE",
+    "title": "\u5982\u4f55\u4fdd\u6c34\u4fdd\u6e7f123"
+  },
+  "model": "peggy.article",
+  "pk": 2
+},
+{
+  "fields": {
+    "text": "\u636e\u97e9\u56fd\u6709\u5173\u90e8\u95e8\u900f\u9732\uff0c\u6d89\u6848\u7a9d\u70b9\u5df2\u7ecf\u5236\u9020\u4e8626.6\u4e07\u5f20\u4e3d\u5f97\u59ff\u9488\u5242\u8865\u6c34\u9762\u819c(Leaders Insolution)\uff0c\u5e02\u573a\u4ef7\u7ea6\u5408\u4eba\u6c11\u5e01450\u4e07\u5143\u3002\u8fd9\u6b21\u73b0\u573a\u67e5\u83b7\u7684\u5047\u5192\u9762\u819c\u6570\u91cf\u8fbe15.8\u4e07\u4e2a\uff0c\u53e6\u670910.8\u4e07\u4e2a\u5df2\u901a\u8fc7\u201c\u6d77\u6dd8\u201d\u3001\u4ee3\u8d2d\u7b49\u975e\u6b63\u5e38\u51fa\u53e3\u65b9\u5f0f\u6d41\u5165\u4e2d\u56fd\u5e02\u573a\u3002<iframe src=\"http://www.tudou.com/programs/view/html5embed.action?type=0&amp;code=e24zKWezmSQ&amp;lcode=&amp;resourceId=9379492_06_05_99\" allowtransparency=\"true\" allowfullscreen=\"true\" scrolling=\"no\" border=\"0\" frameborder=\"0\" style=\"width:220px;height:150px;\"></iframe>\u97e9\u56fd\u67d0\u5316\u5986\u54c1\u8425\u9500\u90e8\u8d1f\u8d23\u4eba\u4ecb\u7ecd\uff0c\u73b0\u5728\u97e9\u56fd\u6709\u5f88\u591a\u4eba\u5728\u5236\u4f5c\u8d29\u5356\u8fd9\u79cd\u5047\u5192\u5316\u5986\u54c1\uff0c\u4ef7\u503c\u5927\u6982\u5728100\u4ebf\u97e9\u5143<br/>(\u7ea6\u5408\u4eba\u6c11\u5e015700\u4e07)\u3002",
+    "cover_img_url": "http://img1.cache.netease.com/catchpic/B/B3/B381E1C7BFB0C5B6536663EAA711E9B3.jpg",
+    "create_time": "2015-02-09T17:50:00",
+    "type": "BULLETIN",
+    "title": "\u6625\u5b63\u5927\u4fc3\u9500"
+  },
+  "model": "peggy.article",
+  "pk": 3
+},
+{
+  "fields": {
+    "total_price": "0.03",
+    "deliver_date": "2015-02-26T11:15:01",
+    "survey_result": null,
+    "discount_price": "0.02",
+    "express_vendor": "yuantong",
+    "state": "CREATED",
+    "out_trade_no": "20150226111357",
+    "create_time": "2015-02-26T11:13:57.404",
+    "user": 1,
+    "express_no": "560031072312 ",
+    "pay_date": null
+  },
+  "model": "peggy.order",
+  "pk": 1
+},
+{
+  "fields": {
+    "amount": 2,
+    "product": 1,
+    "order": 1
+  },
+  "model": "peggy.orderitem",
+  "pk": 1
+},
+{
+  "fields": {
+    "amount": 1,
+    "product": 3,
+    "order": 1
+  },
+  "model": "peggy.orderitem",
+  "pk": 2
+},
+{
+  "fields": {
+    "refund_time": null,
+    "state": "REFUNDED",
+    "create_time": "2015-02-28T15:10:39.082",
+    "user": 1,
+    "point": 0
+  },
+  "model": "peggy.refundclaim",
+  "pk": 1
+},
+{
+  "fields": {
+    "refund_time": null,
+    "state": "REFUNDED",
+    "create_time": "2015-02-28T15:15:38.030",
+    "user": 1,
+    "point": 100
+  },
+  "model": "peggy.refundclaim",
+  "pk": 2
+},
+{
+  "fields": {
+    "refund_time": "2015-02-28T15:22:00",
+    "state": "CREATED",
+    "create_time": "2015-02-28T15:18:27.807",
+    "user": 1,
+    "point": 200
+  },
+  "model": "peggy.refundclaim",
+  "pk": 3
+}
+]

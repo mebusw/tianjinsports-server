@@ -1,0 +1,42 @@
+{% extends 'peggy/_base_bo.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <legend>文章编辑</legend>
+            <form role="form" action="{% url 'peggy.views.bo_article' article.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">标题</label>
+                    <input class="form-control" name="title" value="{{ article.title }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="">封面图片链接</label>
+                    <input class="form-control" name="cover_img_url" value="{{ article.cover_img_url }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="">正文</label>
+                    <textarea class="form-control" rows="8" name="text">{{ article.text }}</textarea>
+                </div>
+
+                <div class="form-group">
+                {% for choice in article.TYPE_CHOICES %}
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="type" {% if article.type == choice.0 %}
+                                checked {% endif %} value="{{ choice.0 }}"/>{{ choice.1 }}
+                        </label>
+                    </div>
+                {% endfor %}
+                </div>
+                <button class="btn btn-primary">保存</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

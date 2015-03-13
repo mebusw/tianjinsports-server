@@ -1,0 +1,54 @@
+{% extends 'peggy/_base_bo.html' %}
+
+{% load url from future %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>订单管理</h2>
+
+                <form role="form" action="{% url 'peggy.views.do_bo_update_order' order.id %}" method="post">
+                    {% csrf_token %}
+                    <p class="">订单号 {{ order.id }}</p>
+
+                    <p>订单状态 {{ order.state }}</p>
+
+                    <p><b>折扣价 ￥{{ order.discount_price }}</b></p>
+
+                    <p><s>原价 ￥{{ order.total_price }}</s></p>
+
+                    <p>付款日期 {{ order.pay_date }}</p>
+
+                    <p>快递日期 {{ order.deliver_date }} <a href="{% url 'peggy.views.express' order.id %}"
+                                                        class="btn btn-primary pull-right">查快递单号 {{ order.express_no|default_if_none:'' }}</a>
+                    </p>
+
+                    <p>
+                        <label>快递单号</label><input type="text" class="" name="express_no"
+                                                  value="{{ order.express_no }}"/></p>
+
+                    <p><label>快递公司</label>
+                        <select name="express_vendor">
+                            <option value="yuantong" {% if order.express_vendor == 'yuantong' %} selected {% endif %}>圆通</option>
+                            <option value="shunfeng" {% if order.express_vendor == 'shunfeng' %} selected {% endif %}>顺丰</option>
+                        </select>
+                    </p>
+                    <ul class="list-group">
+                        {% for order_item in order_items %}
+                            <li class="list-group-item">
+                                <i class="glyphicon glyphicon-ok"></i>
+                                {{ order_item.product }} x{{ order_item.amount }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+{#                    <input type="hidden" name="order_id" value="{{ order.id }}">#}
+                    <button class="btn btn-primary btn-block">
+                        更新订单
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>订单</h2>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">订单号 {{ order.id }}</div>
+                    <div class="panel-body">
+                        <p>订单状态 {{ order.get_state_display }}</p>
+
+                        <p><b>折扣价 ￥{{ order.discount_price }}</b></p>
+                        <p><s>原价 ￥{{ order.total_price }}</s></p>
+
+                        <p>付款日期 {{ order.pay_date }}</p>
+
+                        <p>快递日期 {{ order.deliver_date }} <a href="{% url 'peggy.views.express' order.id %}"
+                                                            class="btn btn-primary pull-right">查快递单号 {{ order.express_no|default_if_none:'' }}</a>
+                        </p>
+
+                        <ul class="list-group">
+                            {% for order_item in order_items %}
+                                <li class="list-group-item">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    {{ order_item.product }} x{{ order_item.amount }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

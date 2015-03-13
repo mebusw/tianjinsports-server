@@ -1,0 +1,12 @@
+.svn
+*.pyc
+~app_keys.md
+index.wsgic
+.idea
+.pydevproject
+.settings
+.project
+.DS_Store
+upload
+*.log
+

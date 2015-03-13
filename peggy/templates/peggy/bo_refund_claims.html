@@ -1,0 +1,57 @@
+{% extends 'peggy/_base_bo.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="row">
+        <h1>返现申请</h1>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#">全部</a></li>
+            <li role="presentation"><a href="#">待返现</a></li>
+            <li role="presentation"><a href="#">已返现</a></li>
+        </ul>
+
+        <ul class="list-group">
+            {% for claim in refund_claims %}
+                <li class="list-group-item">
+                    <form action="{% url 'peggy.views.do_bo_refund' claim.id %}" method="post">
+                        {% csrf_token %}
+                        {{ claim.point }}积分 - {{ claim.user }} - {{ claim.get_state_display  }} - {{ claim.create_time }} -> {{ claim.refund_time }}
+                        {% if claim.state == claim.CREATED %}
+                        <button class="btn btn-danger pull-right">返现结清</button>
+                        {% endif %}
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            {% if refund_claims.has_previous %}
+            <li>
+                <a href="?page={{ refund_claims.previous_page_number }}&size={{ size }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for idx in page_range %}
+            <li class="{% if idx == refund_claims.number %}active{% endif %}">
+                <a href="?page={{ idx }}&size={{ size }}">{{ idx }}</a>
+            </li>
+            {% endfor %}
+
+            {% if refund_claims.has_next %}
+            <li>
+                <a href="?page={{ refund_claims.next_page_number }}&size={{ size }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

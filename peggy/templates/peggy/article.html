@@ -1,0 +1,27 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <legend>文章详情</legend>
+                <h3>{{ article.title }}</h3>
+
+                <div class="panel-body">
+                    <p><img class="img-responsive" src="{{ article.cover_img_url }}"/></p>
+
+                    <p id="article_text" class="hidden">{{ article.text }}</p>
+                    <p id="article_html"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#article_html").html($("#article_text").text());
+    </script>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% load url from future %}
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>PEGGY'S护肤定制</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="PEGGY'S护肤定制">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    {#    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">#}
+    {#    <link href="{% static "css/mobile-angular-ui-hover.min.css" %}" rel="stylesheet">#}
+    <link href="{% static "css/mobile-angular-ui-base.min.css" %}" rel="stylesheet">
+    {#    <link href="{% static "css/mobile-angular-ui-desktop.min.css" %}" rel="stylesheet">#}
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="{% static "img/apple-touch-icon-144-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="{% static "img/apple-touch-icon-114-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="{% static "img/apple-touch-icon-72-precomposed.png" %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static "img/apple-touch-icon-57-precomposed.png" %}">
+    <link rel="shortcut icon" href="{% static "img/favicon.png" %}">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="{% static "js/html5shiv.js" %}"></script>
+    <![endif]-->
+
+    {#    <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>#}
+    {#    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>#}
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+</head>
+
+<body class="has-navbar-top has-navbar-bottom">
+<div class="navbar navbar-app navbar-absolute-top">
+    <a href="/peggy"><img src="{% static "img/peggy-logo.png" %}" class="nav navbar-brand"></a>
+
+    <div class="btn-group pull-right">
+        {% if user.is_authenticated %}
+            <a class="btn" href="#">欢迎, {{ user.first_name }}<strong class="caret"></strong></a>
+            <a class="btn" href="{% url 'peggy.views.do_logout' %}">注销</a>
+        {% else %}
+            <a class="btn" href="{% url 'peggy.views.login_page' %}">登录</a>
+        {% endif %}
+        <a class="btn" id="checkin">签到</a>
+    </div>
+</div>
+
+<div class="app-body">
+    <div class="app-content">
+        <div class="scrollable ng-scope">
+            <div class="scrollable-content section">
+                <div class="navbar-placeholder-top"></div>
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div>
+                <hr/>
+                {% block footer %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="navbar navbar-app navbar-absolute-bottom">
+    <div class="btn-group justified">
+        <a href="/peggy" class="btn btn-navbar {{ btn1_navbar_active }}"><img src="{% static "img/首页.png" %}"></a>
+        <a href="/peggy/survey" class="btn btn-navbar  {{ btn2_navbar_active }}"><img src="{% static "img/定制.png" %}"></a>
+        <a href="/peggy/article" class="btn btn-navbar {{ btn3_navbar_active }}"><img src="{% static "img/美肤.png" %}"></a>
+        <a href="#" class="btn btn-navbar {{ btn4_navbar_active }}"><img src="{% static "img/互动.png" %}"></a>
+        <a href="/peggy/mine" class="btn btn-navbar {{ btn5_navbar_active }}"><img src="{% static "img/我的.png" %}"></a>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static "js/post_scripts.js" %}"></script>
+<script>
+    console.log($.cookie('last_visit'));
+    $.cookie('last_visit', new Date().getTime());
+
+    $("#checkin").click(function(){
+        $.get('{% url 'peggy.views.do_checkin' %}', {}, function(data){
+            console.log(data);
+            if(data.error_code == 0) {
+                alert('签到成功，获得2积分');
+            } else {
+                alert('今日已签到，明日请早');
+            }
+        })
+    });
+</script>
+</body>

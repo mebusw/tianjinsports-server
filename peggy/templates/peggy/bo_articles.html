@@ -1,0 +1,61 @@
+{% extends 'peggy/_base_bo.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% for article in articles %}
+            <div class="row">
+                <div class="">
+                    <a href="{% url 'peggy.views.bo_article' article.id %}" class="">
+                        <div class="">
+                            <h3 class="">{{ article.title }}</h3>
+                            <small>{{ article.create_date|date }}</small>
+                        </div>
+                        <div class="">
+                            <p><img class="" src="{{ article.cover_img_url }}" height="80"/></p>
+
+                            <p>{{ article.text|truncatechars:80 }}</p>
+                        </div>
+                        <div class="btn btn-primary">
+                            编辑<span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"
+                                    align="right"></span>
+                        </div>
+                    </a>
+                </div>
+                <hr/>
+            </div>
+        {% endfor %}
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            {% if articles.has_previous %}
+            <li>
+                <a href="?page={{ articles.previous_page_number }}&size={{ size }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for idx in page_range %}
+            <li class="{% if idx == articles.number %}active{% endif %}">
+                <a href="?page={{ idx }}&size={{ size }}">{{ idx }}</a>
+            </li>
+            {% endfor %}
+
+            {% if articles.has_next %}
+            <li>
+                <a href="?page={{ articles.next_page_number }}&size={{ size }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+
+{% endblock %}

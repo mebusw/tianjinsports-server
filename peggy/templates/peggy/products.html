@@ -1,0 +1,69 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <form role="form" action="{% url 'peggy.views.payment_wap' %}" method="post" class="">
+            {% csrf_token %}
+            <fieldset>
+                <legend>实验室</legend>
+                <div class="form-group">
+                    <label>请选择要定制的产品</label>
+
+                    {% for product in products %}
+                        <input type="hidden" name="product_count" value="{{ products|length }}" />
+                        <input type="hidden" name="survey_result_id" value="{{ survey_result_id }}" />
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label>
+                                    <input type="hidden" name="product_id{{ forloop.counter0 }}" value="{{ product.id }}"/>
+                                    {{ product.name }} ￥{{ product.price }}
+                                </label>
+                            </div>
+                            <div class="col-xs-6 input-group">
+                            <span class="input-group-btn">
+                                <a id="inc{{ forloop.counter0 }}" class="btn btn-default">+</a>
+                            </span>
+                            <input class="form-control" type="number" name="product_amount{{ forloop.counter0 }}"
+                                       id="product_amount{{ forloop.counter0 }}"
+                                       value="0">
+                            <span class="input-group-btn">
+                                <a id="dec{{ forloop.counter0 }}" class="btn btn-default">-</a>
+                            </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </fieldset>
+            <span>如果注册时填写了推荐人手机号，则所有产品可以享受8折优惠。</span>
+            <button class="btn btn-primary btn-block">付款，然后开始调制</button>
+        </form>
+    </div>
+
+
+    <script>
+        (function () {
+        })();
+
+        for (var i = 0; i < $("input[type=number]").length; i++) {
+            $("#inc" + i).data("nbr", i).click(function (evt) {
+                var el = $("#product_amount" + $(evt.target).data("nbr"));
+                var oldValue = parseInt(el.val());
+                el.val(oldValue + 1);
+            });
+
+            $("#dec" + i).data("nbr", i).click(function (evt) {
+                var el = $("#product_amount" + $(evt.target).data("nbr"));
+                var oldValue = parseInt(el.val());
+                el.val(oldValue > 0 ? oldValue - 1 : 0);
+            });
+
+        }
+    </script>
+
+{% endblock %}

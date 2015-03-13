@@ -1,0 +1,54 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="well">您已支付折扣价{{ discount_price }}元，请等待配送！
+                    <br>分享给您的朋友吧！
+                    <br>
+                    <span>支付结果 {{ result }} |  out_trade_no {{ out_trade_no }} | 签名验证 {{ is_correct_sign }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="btn-group hide">
+                    <a href="#" name="w" class="btn btn-success">微信</a>
+                    <a href="#" name="b" class="btn btn-danger">微博</a>
+                    <a href="#" name="q" class="btn btn-info">QQ</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $('.btn').on('click', function (e) {
+            console.log(e);
+            answerBoxShouldBeginEditing(e);
+        });
+
+        function answerBoxShouldBeginEditing(e) {
+            var object = e.toElement;
+            var answer = '' + '{{ payment_result }}' + $(object).attr('name');
+            var request = 'engine:' + answer;
+            var iframe = document.createElement('IFRAME');
+            iframe.setAttribute('src', request);
+            document.documentElement.appendChild(iframe);
+            iframe.parentNode.removeChild(iframe);
+            iframe = null;
+        }
+
+    </script>
+
+{% endblock %}

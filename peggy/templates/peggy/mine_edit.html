@@ -1,0 +1,53 @@
+{% extends 'peggy/_base.html' %}
+
+{% load url from future %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <h3>修改我的信息</h3>
+
+            <form method="post" action="{% url 'peggy.views.do_update_mine' %}">
+                {% csrf_token %}
+                <ul class="list-group">
+                    <li class="list-group-item">昵称 <span class="pull-right">
+                    <input type="text" name="first_name"
+                           value="{{ user.first_name }}"/></span>
+                    </li>
+                    <li class="list-group-item">地址 <span class="pull-right">
+                    <input type="text" name="address"
+                           value="{{ customer.address }}"/></span>
+                    </li>
+                    <li class="list-group-item">头像链接 <span class="pull-right">
+                    <input type="text" name="avatar_url"
+                           value="{{ customer.avatar_url }}"/></span>
+                    </li>
+                    <li class="list-group-item">性别 <span class="pull-right">
+                    <select name="gender">
+                        <option value="M" {% if customer.gender == 'M' %}
+                                selected {% endif %}>{{ customer.GENDER_CHOICES.0.1 }}</option>
+                        <option value="F" {% if customer.gender == 'F' %}
+                                selected {% endif %}>{{ customer.GENDER_CHOICES.1.1 }}</option>
+                    </select>
+                        </span>
+                    </li>
+                    <li class="list-group-item">生日 <span class="pull-right">
+                    <input type="date" name="birthday"
+                           value="{{ customer.birthday|date:'Y-m-d' }}"/></span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-block">提交</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+        })();
+
+    </script>
+
+{% endblock %}
+
