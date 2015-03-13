@@ -18,8 +18,16 @@ def jsonp(request):
 ######### WeiXin #########################
 
 WEIXIN_TOKEN = "JACKY"
+
+#测试号
 APP_ID= 'wx62b78e3d97080e93'
 APP_SECRET = '3483543989f61c07bdd7f5bcff3eb9d3'
+
+#天津软件沙龙
+# APP_ID= 'wxfa590ca25889e839'
+# APP_SECRET = 'd86a513fc25ba967364cfa4cb4ba3e00'
+
+
 REPLY_TMPL = """<xml>
                 <ToUserName><![CDATA[%s]]></ToUserName>
                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -43,6 +51,15 @@ MUSIC_TMPL = """<xml>
 </Music>
 </xml>"""
 
+IMAGE_TMPL = """<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[image]]></MsgType>
+<Image>
+<MediaId><![CDATA[%s]]></MediaId>
+</Image>
+</xml>"""
 
 @csrf_exempt
 def wx_main(request):
@@ -53,10 +70,10 @@ def wx_main(request):
     """
     print request.method, request.path, request.GET, request.POST
     if request.method == "GET":
-        signature = request.GET.get("signature", None)
-        timestamp = request.GET.get("timestamp", None)
-        nonce = request.GET.get("nonce", None)
-        echostr = request.GET.get("echostr", None)
+        signature = request.GET.get("signature", 'null')
+        timestamp = request.GET.get("timestamp", 'null')
+        nonce = request.GET.get("nonce", 'null')
+        echostr = request.GET.get("echostr", 'null')
         token = WEIXIN_TOKEN
         tmp_list = [token, timestamp, nonce]
         tmp_list.sort()
@@ -96,14 +113,20 @@ def _post_msg_dispatch(request):
 
 def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
     content = xml.find("Content").text
-
-    if content == "t":
-        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token()))
+    print content
+    
+    if content == 't':
+        r = REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token())
     elif content == 'm':
-        return HttpResponse(MUSIC_TMPL % (toUserName, fromUserName, postTime, 
-            "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb'))
+        r = MUSIC_TMPL % (toUserName, fromUserName, postTime, 
+            "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb')
+    elif content == 'i':
+        r = IMAGE_TMPL % (toUserName, fromUserName, postTime, 'Wl1XX2zhwkMhULxD_JnKPuaq64XUPxLB9C2HTleBxAiKV1C2oCEdp6IvZlHYVxOD')
     else:
-        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的文本交互... %s" %(smart_str(content))))
+        r = REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的文本交互... %s" %(smart_str(content)))
+
+    print r
+    return HttpResponse(r)
 
 def _reply_location_msg(xml, fromUserName, toUserName, postTime, msgId):
     x = xml.find("Location_X").text
