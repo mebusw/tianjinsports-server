@@ -92,12 +92,11 @@ def _post_msg_dispatch(request):
     print xml_str
 
     msgType = xml.find("MsgType").text
-    msgId = xml.find("MsgId").text
     fromUserName = xml.find("ToUserName").text
     toUserName = xml.find("FromUserName").text
     postTime = str(int(time.time()))
 
-    generics = (fromUserName, toUserName, postTime, msgId)
+    generics = (fromUserName, toUserName, postTime)
 
     if msgType == 'text':
         return _reply_text_msg(xml, *generics)
@@ -111,10 +110,11 @@ def _post_msg_dispatch(request):
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的命令交互类型 <%s>..." % msgType))
 
 
-def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
+def _reply_text_msg(xml, fromUserName, toUserName, postTime):
+    msgId = xml.find("MsgId").text
     content = xml.find("Content").text
     print content
-    
+
     if content == 't':
         r = REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token())
     elif content == 'm':
@@ -128,7 +128,7 @@ def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
     print r
     return HttpResponse(r)
 
-def _reply_location_msg(xml, fromUserName, toUserName, postTime, msgId):
+def _reply_location_msg(xml, fromUserName, toUserName, postTime):
     x = xml.find("Location_X").text
     y = xml.find("Location_Y").text
     scale = xml.find("Scale").text
@@ -136,14 +136,14 @@ def _reply_location_msg(xml, fromUserName, toUserName, postTime, msgId):
     return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
         "你在(%s,%s)@%s-%s" % (x, y, scale, smart_str(label))))
 
-def _reply_image_msg(xml, fromUserName, toUserName, postTime, msgId):
+def _reply_image_msg(xml, fromUserName, toUserName, postTime):
     picUrl = xml.find("PicUrl").text
     mediaId = xml.find("MediaId").text
     return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
         "暂不支持识别图片交互哦,功能开发中... %s , %s" % (picUrl, mediaId)))
 
 
-def _reply_event_msg(xml, fromUserName, toUserName, postTime, msgId):
+def _reply_event_msg(xml, fromUserName, toUserName, postTime):
     event = xml.find("Event").text
 
     if event == 'LOCATION':
@@ -156,7 +156,7 @@ def _reply_event_msg(xml, fromUserName, toUserName, postTime, msgId):
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
             "欢迎订阅"))
     elif event == 'CLICK':
-        eventKey = xml.find("EVENTKEY").text
+        eventKey = xml.find("EventKey").text
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
             "你点击了菜单 eventKey=%s" % (eventKey)))
     else:
