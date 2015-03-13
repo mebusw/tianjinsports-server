@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from polls.models import Poll, Choice
 import json
-import hashlib, time, re, urllib2
+import hashlib, time, re, urllib2, urllib
 from xml.etree import ElementTree as ET
 from django.utils.encoding import smart_str
 from django.views.decorators.csrf import csrf_exempt
@@ -117,6 +117,8 @@ def _reply_text_msg(xml, fromUserName, toUserName, postTime):
 
     if content == 't':
         r = REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token())
+    elif content == 'n':
+        r = REPLY_TMPL % (toUserName, fromUserName, postTime, _create_menu())
     elif content == 'm':
         r = MUSIC_TMPL % (toUserName, fromUserName, postTime, 
             "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb')
@@ -158,6 +160,12 @@ def _reply_event_msg(xml, fromUserName, toUserName, postTime):
     elif event == 'ENTER':
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
             "欢迎回来"))
+    elif event == 'scancode_waitmsg' or event == 'scancode_push':
+        eventKey = xml.find("EventKey").text
+        scanType = xml.find("ScanCodeInfo/ScanType").text
+        scanResult = xml.find("ScanCodeInfo/ScanResult").text
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "扫一扫成功 %s %s %s" % (eventKey, scanType, scanResult) ))
     elif event == 'CLICK':
         eventKey = xml.find("EventKey").text
         return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
@@ -171,7 +179,54 @@ def _get_access_token():
     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s' % (APP_ID, APP_SECRET)
     req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"))
     json_str = req.read().decode('utf-8')
-    return json_str
+    return json.loads(json_str).get('access_token')
+
+def _create_menu():
+    url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s' % _get_access_token()
+    body = {
+    "button": [
+        {
+            "type": "click", 
+            "name": "今日歌曲", 
+            "key": "V1001_TODAY_MUSIC"
+        }, 
+        {
+            "name": "发送位置", 
+            "type": "location_select", 
+            "key": "rselfmenu_2_0"
+        }, 
+        {
+            "name": "菜单", 
+            "sub_button": [
+                {
+                    "type": "scancode_waitmsg", 
+                    "name": "扫码带提示", 
+                    "key": "rselfmenu_0_0", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "view", 
+                    "name": "搜索", 
+                    "url": "http://www.soso.com/"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "视频", 
+                    "url": "http://v.qq.com/"
+                }, 
+                {
+                    "type": "pic_photo_or_album", 
+                    "name": "拍照或者相册", 
+                    "key": "rselfmenu_1_1"
+                }]
+        }]
+    }
+    
+    req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), data=urllib.urlencode(body))
+    json_str = req.read().decode('utf-8')
+    print json_str
+    return json.loads(json_str).get('errmsg')
+
 
 #############################
 
