@@ -66,24 +66,45 @@ def wx_main(request):
         else:
             return HttpResponse("weixin main (signature wrong)")
     else:   ### POST
-        xml_str = smart_str(request.body)
-        print xml_str
-        xml = ET.fromstring(xml_str)
-        content = xml.find("Content").text
-        fromUserName = xml.find("ToUserName").text
-        toUserName = xml.find("FromUserName").text
-        postTime = str(int(time.time()))
-        if not content:
-            return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "输入点命令吧...http://chajidian.sinaapp.com/ "))
-        elif content == "access_token":
-            return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token()))
-        elif content == 'music':
-            return HttpResponse(MUSIC_TMPL % (toUserName, fromUserName, postTime, 
-                "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb'))
-        else:
-            return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "暂不支持任何命令交互哦,功能开发中..."))
-        response_xml = WEIXIN_REPLY_TMPL
-        return HttpResponse(response_xml)
+        return _post_msg_dispatch(request)
+
+
+def _post_msg_dispatch(request):
+    xml_str = smart_str(request.body)
+    xml = ET.fromstring(xml_str)
+    print xml_str
+
+    msgType = xml.find("MsgType").text
+    msgId = xml.find("MsgId").text
+    fromUserName = xml.find("ToUserName").text
+    toUserName = xml.find("FromUserName").text
+    postTime = str(int(time.time()))
+
+    generics = (fromUserName, toUserName, postTime, msgId)
+
+    if msgType == 'text':
+        return _reply_text_msg(xml, *generics)
+    else:
+        return _reply_image_msg(xml, *generics)
+
+
+def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
+    content = xml.find("Content").text
+
+    if content == "t":
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token()))
+    elif content == 'm':
+        return HttpResponse(MUSIC_TMPL % (toUserName, fromUserName, postTime, 
+            "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb'))
+    else:
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的命令交互... %s" %(content)))
+
+
+def _reply_image_msg(xml, fromUserName, toUserName, postTime, msgId):
+    picUrl = xml.find("PicUrl").text
+    mediaId = xml.find("MediaId").text
+    return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+        "暂不支持识别图片交互哦,功能开发中... %s , %s" % (picUrl, mediaId)))
 
 
 def _get_access_token():
