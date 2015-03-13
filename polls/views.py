@@ -221,8 +221,9 @@ def _create_menu():
                 }]
         }]
     }
-    
-    req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), data=urllib.urlencode(body))
+
+    print urllib.urlencode(body)
+    req = urllib2.urlopen(urllib2.Request(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), data=urllib.urlencode(body)))
     json_str = req.read().decode('utf-8')
     print json_str
     return json.loads(json_str).get('errmsg')
