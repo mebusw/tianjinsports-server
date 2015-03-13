@@ -84,8 +84,14 @@ def _post_msg_dispatch(request):
 
     if msgType == 'text':
         return _reply_text_msg(xml, *generics)
-    else:
+    elif msgType == 'image':
         return _reply_image_msg(xml, *generics)
+    elif msgType == 'event':
+        return _reply_event_msg(xml, *generics)
+    elif msgType == 'location':
+        return _reply_location_msg(xml, *generics)
+    else:
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的命令交互类型 <%s>..." % msgType))
 
 
 def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
@@ -97,14 +103,42 @@ def _reply_text_msg(xml, fromUserName, toUserName, postTime, msgId):
         return HttpResponse(MUSIC_TMPL % (toUserName, fromUserName, postTime, 
             "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb'))
     else:
-        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的命令交互... %s" %(content)))
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "无法识别的文本交互... %s" %(smart_str(content))))
 
+def _reply_location_msg(xml, fromUserName, toUserName, postTime, msgId):
+    x = xml.find("Location_X").text
+    y = xml.find("Location_Y").text
+    scale = xml.find("Scale").text
+    label = xml.find("Label").text
+    return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+        "你在(%s,%s)@%s-%s" % (x, y, scale, smart_str(label))))
 
 def _reply_image_msg(xml, fromUserName, toUserName, postTime, msgId):
     picUrl = xml.find("PicUrl").text
     mediaId = xml.find("MediaId").text
     return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
         "暂不支持识别图片交互哦,功能开发中... %s , %s" % (picUrl, mediaId)))
+
+
+def _reply_event_msg(xml, fromUserName, toUserName, postTime, msgId):
+    event = xml.find("Event").text
+
+    if event == 'LOCATION':
+        latitude = xml.find("Latitude").text
+        longitude = xml.find("Longitude").text
+        precision = xml.find("Precision").text
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "你的坐标(%s,%s)@%s" % (latitude, Latitude, precision)))
+    elif event == 'subscribe':
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "欢迎订阅"))
+    elif event == 'CLICK':
+        eventKey = xml.find("EVENTKEY").text
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "你点击了菜单 eventKey=%s" % (eventKey)))
+    else:
+        return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, 
+            "暂不支持识别事件交互哦,功能开发中... %s" % (event)))
 
 
 def _get_access_token():
