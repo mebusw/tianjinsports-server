@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from polls.models import Poll, Choice
 import json
-import hashlib, time, re
+import hashlib, time, re, urllib2
 from xml.etree import ElementTree as ET
 from django.utils.encoding import smart_str
 from django.views.decorators.csrf import csrf_exempt
@@ -15,8 +15,11 @@ from django.views.decorators.csrf import csrf_exempt
 def jsonp(request):
     return HttpResponse(json.dumps([1,2,3,4,5, None, True]), content_type="application/json")
 
+######### WeiXin #########################
 
 WEIXIN_TOKEN = "JACKY"
+APP_ID= 'wx62b78e3d97080e93'
+APP_SECRET = '3483543989f61c07bdd7f5bcff3eb9d3'
 REPLY_TMPL = """<xml>
                 <ToUserName><![CDATA[%s]]></ToUserName>
                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -25,6 +28,21 @@ REPLY_TMPL = """<xml>
                 <Content><![CDATA[%s]]></Content>
                 <FuncFlag>0</FuncFlag>
             </xml>"""
+
+MUSIC_TMPL = """<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[music]]></MsgType>
+<Music>
+<Title><![CDATA[%s]]></Title>
+<Description><![CDATA[%s]]></Description>
+<MusicUrl><![CDATA[%s]]></MusicUrl>
+<HQMusicUrl><![CDATA[%s]]></HQMusicUrl>
+<ThumbMediaId><![CDATA[%s]]></ThumbMediaId>
+</Music>
+</xml>"""
+
 
 @csrf_exempt
 def wx_main(request):
@@ -42,8 +60,7 @@ def wx_main(request):
         token = WEIXIN_TOKEN
         tmp_list = [token, timestamp, nonce]
         tmp_list.sort()
-        tmp_str = "%s%s%s" % tuple(tmp_list)
-        tmp_str = hashlib.sha1(tmp_str).hexdigest()
+        tmp_str = hashlib.sha1("".join(tmp_list)).hexdigest()
         if tmp_str == signature:
             return HttpResponse(echostr)
         else:
@@ -58,13 +75,24 @@ def wx_main(request):
         postTime = str(int(time.time()))
         if not content:
             return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "输入点命令吧...http://chajidian.sinaapp.com/ "))
-        if content == "Hello2BizUser":
-            return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "查询成绩绩点请到http://chajidian.sinaapp.com/ 本微信更多功能开发中..."))
+        elif content == "access_token":
+            return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, _get_access_token()))
+        elif content == 'music':
+            return HttpResponse(MUSIC_TMPL % (toUserName, fromUserName, postTime, 
+                "当你老了", "莫文蔚+申健", 'http://yinyueshiting.baidu.com/data2/music/137081688/137078183169200128.mp3?xcode=3f8daaf15d85ed8badcbb9aec74595eb0b86fc0e5b731aec', '', '8mtENBlNa2hjiGvHzCOUMSrAR0bpAthOX7Un_dE2BZQipzR_O6BB3amcjGbViqwb'))
         else:
             return HttpResponse(REPLY_TMPL % (toUserName, fromUserName, postTime, "暂不支持任何命令交互哦,功能开发中..."))
         response_xml = WEIXIN_REPLY_TMPL
         return HttpResponse(response_xml)
 
+
+def _get_access_token():
+    url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s' % (APP_ID, APP_SECRET)
+    req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"))
+    json_str = req.read().decode('utf-8')
+    return json_str
+
+#############################
 
 def index(request):
     latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
