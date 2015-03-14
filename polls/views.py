@@ -20,13 +20,16 @@ def jsonp(request):
 WEIXIN_TOKEN = "JACKY"
 
 #测试号
-APP_ID= 'wx62b78e3d97080e93'
-APP_SECRET = '3483543989f61c07bdd7f5bcff3eb9d3'
+# APP_ID= 'wx62b78e3d97080e93'
+# APP_SECRET = '3483543989f61c07bdd7f5bcff3eb9d3'
 
 #天津软件沙龙
 # APP_ID= 'wxfa590ca25889e839'
 # APP_SECRET = 'd86a513fc25ba967364cfa4cb4ba3e00'
 
+#17运动网
+APP_ID= 'wx6b8d8dff23e4d723'
+APP_SECRET = 'b503198f1f0d5e24d89727d3a1541960'
 
 REPLY_TMPL = """<xml>
                 <ToUserName><![CDATA[%s]]></ToUserName>
@@ -200,7 +203,7 @@ def _create_menu():
     "button": [
         {
             "type": "view", 
-            "name": "Home", 
+            "name": 'HOME', 
             "url": "http://123.57.88.24/polls/"
         }, 
         {
@@ -236,8 +239,8 @@ def _create_menu():
     }
 
     post_json_str = json.dumps(body, ensure_ascii=False)
-    print post_json_str, type(post_json_str)
-    # print urllib.urlencode(post_json_str)
+    # post_json_str = urllib.urlencode(body)
+    print post_json_str, type(post_json_str), urllib2.quote(post_json_str)
     req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), post_json_str)
     json_str = req.read()
     print json_str
