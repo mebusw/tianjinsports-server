@@ -176,19 +176,32 @@ def _reply_event_msg(xml, fromUserName, toUserName, postTime):
 
 
 def _get_access_token():
+    """
+    7200s有效，需要全局缓存下来
+    """
     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s' % (APP_ID, APP_SECRET)
     req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"))
-    json_str = req.read().decode('utf-8')
+    json_str = req.read()
     return json.loads(json_str).get('access_token')
+
+def _get_jsapi_ticket():
+    """
+    7200s有效，需要全局缓存下来
+    """
+    url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi' % (_get_access_token())
+    req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"))
+    json_str = req.read()
+    return json.loads(json_str).get('ticket')
+
 
 def _create_menu():
     url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s' % _get_access_token()
     body = {
     "button": [
         {
-            "type": "click", 
-            "name": "Today's song", 
-            "key": "V1001_TODAY_MUSIC"
+            "type": "view", 
+            "name": "Home", 
+            "url": "http://123.57.88.24/polls/"
         }, 
         {
             "name": "L", 
@@ -210,9 +223,9 @@ def _create_menu():
                     "url": "http://www.soso.com/"
                 }, 
                 {
-                    "type": "view", 
-                    "name": "V", 
-                    "url": "http://v.qq.com/"
+                    "type": "click", 
+                    "name": "tap me", 
+                    "key": "V1001_TODAY_MUSIC"
                 }, 
                 {
                     "type": "pic_photo_or_album", 
@@ -235,7 +248,13 @@ def _create_menu():
 
 def index(request):
     latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
-    return render_to_response('polls/index.html', {'latest_poll_list': latest_poll_list})
+    timestamp = int(time.time())
+    noncestr = 'NONCE'
+    url = 'http://123.57.88.24/polls/'
+    s = 'jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s' % (_get_jsapi_ticket(), noncestr, timestamp, url)
+    return render_to_response('polls/index.html', {'latest_poll_list': latest_poll_list,
+        'appId': APP_ID, 'timestamp': timestamp, 'nonceStr': noncestr, 
+        'signature': hashlib.sha1(s).hexdigest(), 's': s})
 
 def detail(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
