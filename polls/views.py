@@ -187,44 +187,46 @@ def _create_menu():
     "button": [
         {
             "type": "click", 
-            "name": "今日歌曲", 
+            "name": "Today's song", 
             "key": "V1001_TODAY_MUSIC"
         }, 
         {
-            "name": "发送位置", 
+            "name": "L", 
             "type": "location_select", 
             "key": "rselfmenu_2_0"
         }, 
         {
-            "name": "菜单", 
+            "name": "M", 
             "sub_button": [
                 {
                     "type": "scancode_waitmsg", 
-                    "name": "扫码带提示", 
+                    "name": "SCAN", 
                     "key": "rselfmenu_0_0", 
                     "sub_button": [ ]
                 }, 
                 {
                     "type": "view", 
-                    "name": "搜索", 
+                    "name": "S", 
                     "url": "http://www.soso.com/"
                 }, 
                 {
                     "type": "view", 
-                    "name": "视频", 
+                    "name": "V", 
                     "url": "http://v.qq.com/"
                 }, 
                 {
                     "type": "pic_photo_or_album", 
-                    "name": "拍照或者相册", 
+                    "name": "P", 
                     "key": "rselfmenu_1_1"
                 }]
         }]
     }
 
-    print urllib.urlencode(body)
-    req = urllib2.urlopen(urllib2.Request(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), data=urllib.urlencode(body)))
-    json_str = req.read().decode('utf-8')
+    post_json_str = json.dumps(body, ensure_ascii=False)
+    print post_json_str, type(post_json_str)
+    # print urllib.urlencode(post_json_str)
+    req = urllib2.urlopen(urllib2.quote(url, safe="%/:=&?~#+!$,;'@()*[]"), post_json_str)
+    json_str = req.read()
     print json_str
     return json.loads(json_str).get('errmsg')
 
